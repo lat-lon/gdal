@@ -5,8 +5,8 @@
 # Public domain
 # or licensed under MIT (LICENSE.TXT) Copyright 2019 Even Rouault <even.rouault@spatialys.com>
 
-ARG BASE_IMAGE=ubuntu:20.04
-ARG TARGET_BASE_IMAGE=ubuntu:20.04
+ARG BASE_IMAGE=debian:11
+ARG TARGET_BASE_IMAGE=debian:11
 
 FROM $BASE_IMAGE as builder
 
@@ -20,13 +20,9 @@ COPY ./bh-set-envvars.sh /buildscripts/bh-set-envvars.sh
 RUN . /buildscripts/bh-set-envvars.sh \
     && if test "${TARGET_ARCH}" != ""; then \
     rm -f /etc/apt/sources.list \
-    && echo "deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse" >> /etc/apt/sources.list \
-    && echo "deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse" >> /etc/apt/sources.list \
-    && echo "deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list \
-    && echo "deb [arch=amd64] http://security.ubuntu.com/ubuntu focal-security main restricted universe multiverse" >> /etc/apt/sources.list \
-    && echo "deb [arch=${TARGET_ARCH}] http://ports.ubuntu.com/ubuntu-ports/ focal main restricted universe multiverse" >> /etc/apt/sources.list \
-    && echo "deb [arch=${TARGET_ARCH}] http://ports.ubuntu.com/ubuntu-ports/ focal-updates main restricted universe multiverse" >> /etc/apt/sources.list \
-    && echo "deb [arch=${TARGET_ARCH}] http://ports.ubuntu.com/ubuntu-ports/ focal-security main restricted universe multiverse" >> /etc/apt/sources.list \
+    && echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list \
+    && echo "deb http://deb.debian.org/debian-security/ bullseye-security main" >> /etc/apt/sources.list \
+    && echo "deb http://deb.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list \
     && dpkg --add-architecture ${TARGET_ARCH} \
     && apt-get update -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y g++-9-${GCC_ARCH}-linux-gnu \
@@ -58,7 +54,7 @@ RUN . /buildscripts/bh-set-envvars.sh \
        libspatialite-dev${APT_ARCH_SUFFIX} swig ant libhdf4-alt-dev${APT_ARCH_SUFFIX} libhdf5-serial-dev${APT_ARCH_SUFFIX} \
        libfreexl-dev${APT_ARCH_SUFFIX} unixodbc-dev${APT_ARCH_SUFFIX} libwebp-dev${APT_ARCH_SUFFIX} libepsilon-dev${APT_ARCH_SUFFIX} \
        liblcms2-2 libpcre3-dev${APT_ARCH_SUFFIX} libcrypto++-dev${APT_ARCH_SUFFIX} libfyba-dev${APT_ARCH_SUFFIX} \
-       libkml-dev${APT_ARCH_SUFFIX} libmysqlclient-dev${APT_ARCH_SUFFIX} libogdi-dev${APT_ARCH_SUFFIX} \
+       libkml-dev${APT_ARCH_SUFFIX} default-libmysqlclient-dev${APT_ARCH_SUFFIX} libogdi-dev${APT_ARCH_SUFFIX} \
        libcfitsio-dev${APT_ARCH_SUFFIX} openjdk-"$JAVA_VERSION"-jdk${APT_ARCH_SUFFIX} libzstd-dev${APT_ARCH_SUFFIX} \
        libpq-dev${APT_ARCH_SUFFIX} libssl-dev${APT_ARCH_SUFFIX} libboost-dev${APT_ARCH_SUFFIX} \
        autoconf automake bash-completion libarmadillo-dev${APT_ARCH_SUFFIX} \
@@ -302,15 +298,15 @@ RUN apt-get update \
 # GDAL dependencies
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
         libopenjp2-7 libcairo2 python3-numpy \
-        libpng16-16 libjpeg-turbo8 libgif7 liblzma5 libgeos-3.8.0 libgeos-c1v5 \
+        libpng16-16 libjpeg62-turbo-dev libgif7 liblzma5 libgeos-dev libgeos-c1v5 \
         libxml2 libexpat1 \
-        libxerces-c3.2 libnetcdf-c++4 netcdf-bin libpoppler97 libspatialite7 gpsbabel \
+        libxerces-c3.2 libnetcdf-c++4 netcdf-bin libpoppler-dev libspatialite7 gpsbabel \
         libhdf4-0-alt libhdf5-103 libhdf5-cpp-103 poppler-utils libfreexl1 unixodbc libwebp6 \
-        libepsilon1 liblcms2-2 libpcre3 libcrypto++6 libfyba0 \
+        libepsilon1 liblcms2-2 libpcre3 libcrypto++8 libfyba0 \
         libkmlbase1 libkmlconvenience1 libkmldom1 libkmlengine1 libkmlregionator1 libkmlxsd1 \
-        libmysqlclient21 libogdi4.1 libcfitsio8 openjdk-"$JAVA_VERSION"-jre \
+        default-libmysqlclient-dev libogdi4.1 libcfitsio9 openjdk-"$JAVA_VERSION"-jre \
         libzstd1 bash bash-completion libpq5 libssl1.1 \
-        libarmadillo9 libpython3.8 libopenexr24 libheif1 \
+        libarmadillo10 libpython3.8 libopenexr25 libheif1 \
         libdeflate0 libblosc1 liblz4-1 \
         libbrotli1 \
         python-is-python3 \
