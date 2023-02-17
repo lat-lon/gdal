@@ -1,5 +1,5 @@
 ##
-# osgeo/gdal:ubuntu-full
+# osgeo/gdal:debian-full
 
 # This file is available at the option of the licensee under:
 # Public domain
