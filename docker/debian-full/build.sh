@@ -38,7 +38,7 @@ fi
 
 "${SCRIPT_DIR}/../util.sh" "$@" --test-python
 
-if test "${HAS_PLATFORM}" = "0" -a "${HAS_RELEASE}" = "0" -a "x${TARGET_IMAGE}" = "xosgeo/gdal:ubuntu-full"; then
+if test "${HAS_PLATFORM}" = "0" -a "${HAS_RELEASE}" = "0" -a "x${TARGET_IMAGE}" = "xosgeo/gdal:debian-full"; then
  "${SCRIPT_DIR}/../util.sh" --platform linux/arm64 "$@" --test-python
 
  if test "$HAS_PUSH" = "1"; then
@@ -50,8 +50,8 @@ if test "${HAS_PLATFORM}" = "0" -a "${HAS_RELEASE}" = "0" -a "x${TARGET_IMAGE}" 
 
    docker manifest rm osgeo/gdal || /bin/true
    docker manifest create osgeo/gdal \
-     --amend osgeo/gdal:ubuntu-full-latest-amd64 \
-     --amend osgeo/gdal:ubuntu-full-latest-arm64
+     --amend osgeo/gdal:debian-full-latest-amd64 \
+     --amend osgeo/gdal:debian-full-latest-arm64
    docker manifest push osgeo/gdal
  fi
 fi
