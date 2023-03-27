@@ -9,7 +9,7 @@ best of our knowledge and not guaranteed. Users should check by themselves.
 
 # Alpine based (3.15)
 
-## Small: `osgeo/gdal:alpine-small-latest`
+## Small: `lat-lon/gdal:alpine-small-latest`
 
 * Image size: ~ 59 MB
 * Raster drivers: ultrasmall + built-in + SQLite-based ones + network-based ones
@@ -22,7 +22,7 @@ best of our knowledge and not guaranteed. Users should check by themselves.
 
 See [alpine-small/Dockerfile](alpine-small/Dockerfile)
 
-## Normal: `osgeo/gdal:alpine-normal-latest`
+## Normal: `lat-lon/gdal:alpine-normal-latest`
 
 * Image size: ~ 242 MB
 * Raster drivers: small + netCDF, HDF5, BAG
@@ -38,7 +38,7 @@ See [alpine-normal/Dockerfile](alpine-normal/Dockerfile)
 
 # Ubuntu based (20:04 / focal)
 
-## Small: `osgeo/gdal:ubuntu-small-latest`
+## Small: `lat-lon/gdal:ubuntu-small-latest`
 
 * Image size: ~ 385 MB
 * Raster drivers: all built-in + JPEG + PNG + JP2OpenJPEG + WEBP +SQLite-based ones + network-based ones
@@ -52,7 +52,7 @@ See [alpine-normal/Dockerfile](alpine-normal/Dockerfile)
 
 See [ubuntu-small/Dockerfile](ubuntu-small/Dockerfile)
 
-## Full: `osgeo/gdal:ubuntu-full-latest` (aliased to `osgeo/gdal`)
+## Full: `lat-lon/gdal:ubuntu-full-latest` (aliased to `lat-lon/gdal`)
 
 * Image size: ~ 1.48 GB
 * Raster drivers: all based on almost all possible free and open-source dependencies
@@ -77,17 +77,17 @@ Note: you should *not* try to install GDAL (directly or indirectly through other
 ## Example:
 
 ```shell
-docker pull osgeo/gdal:alpine-small-latest
-docker run --rm -v /home:/home osgeo/gdal:alpine-small-latest gdalinfo $PWD/my.tif
+docker pull lat-lon/gdal:alpine-small-latest
+docker run --rm -v /home:/home lat-lon/gdal:alpine-small-latest gdalinfo $PWD/my.tif
 ```
 
 # Images of releases
 
 Tagged images of recent past releases are available. The last ones (at time of writing) are for GDAL 3.4.2 and PROJ 9.0.0, for linux/amd64 and linux/arm64:
-* osgeo/gdal:alpine-small-3.4.2
-* osgeo/gdal:alpine-normal-3.4.2
-* osgeo/gdal:ubuntu-small-3.4.2
-* osgeo/gdal:ubuntu-full-3.4.2
+* lat-lon/gdal:alpine-small-3.4.2
+* lat-lon/gdal:alpine-normal-3.4.2
+* lat-lon/gdal:ubuntu-small-3.4.2
+* lat-lon/gdal:ubuntu-full-3.4.2
 
 ## Multi-arch Images
 

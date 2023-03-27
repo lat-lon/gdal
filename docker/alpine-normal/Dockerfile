@@ -1,5 +1,5 @@
 ##
-# osgeo/gdal:alpine-normal
+# lat-lon/gdal:alpine-normal
 
 # This file is available at the option of the licensee under:
 # Public domain

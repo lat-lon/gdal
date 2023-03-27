@@ -1,5 +1,5 @@
 ##
-# osgeo/gdal:alpine-small
+# lat-lon/gdal:alpine-small
 
 # This file is available at the option of the licensee under:
 # Public domain

@@ -19,7 +19,7 @@ esac
 
 export SCRIPT_DIR
 TAG_NAME=$(basename "${SCRIPT_DIR}")
-export TARGET_IMAGE=${TARGET_IMAGE:-osgeo/gdal:${TAG_NAME}}
+export TARGET_IMAGE=${TARGET_IMAGE:-lat-lon/gdal:${TAG_NAME}}
 
 HAS_PLATFORM=0
 if echo "$*" | grep "\-\-platform" > /dev/null; then
@@ -38,7 +38,7 @@ fi
 
 "${SCRIPT_DIR}/../util.sh" "$@" --test-python
 
-if test "${HAS_PLATFORM}" = "0" -a "${HAS_RELEASE}" = "0" -a "x${TARGET_IMAGE}" = "xosgeo/gdal:debian-full"; then
+if test "${HAS_PLATFORM}" = "0" -a "${HAS_RELEASE}" = "0" -a "x${TARGET_IMAGE}" = "xlat-lon/gdal:debian-full"; then
  "${SCRIPT_DIR}/../util.sh" --platform linux/arm64 "$@" --test-python
 
  if test "$HAS_PUSH" = "1"; then
@@ -48,10 +48,10 @@ if test "${HAS_PLATFORM}" = "0" -a "${HAS_RELEASE}" = "0" -a "x${TARGET_IMAGE}" 
      --amend ${TARGET_IMAGE}-latest-arm64
    docker manifest push ${TARGET_IMAGE}-latest
 
-   docker manifest rm osgeo/gdal || /bin/true
-   docker manifest create osgeo/gdal \
-     --amend osgeo/gdal:debian-full-latest-amd64 \
-     --amend osgeo/gdal:debian-full-latest-arm64
-   docker manifest push osgeo/gdal
+   docker manifest rm lat-lon/gdal || /bin/true
+   docker manifest create lat-lon/gdal \
+     --amend lat-lon/gdal:debian-full-latest-amd64 \
+     --amend lat-lon/gdal:debian-full-latest-arm64
+   docker manifest push lat-lon/gdal
  fi
 fi

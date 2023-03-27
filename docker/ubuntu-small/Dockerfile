@@ -1,5 +1,5 @@
 ##
-# osgeo/gdal:ubuntu-small
+# lat-lon/gdal:ubuntu-small
 
 # This file is available at the option of the licensee under:
 # Public domain
