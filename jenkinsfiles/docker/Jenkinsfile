@@ -20,7 +20,7 @@ pipeline {
     }
     stage('Build') {
       steps{
-        sh './${IMAGE_NAME}/build.sh --platform linux/amd64 --gdal ${VERSION}'
+        sh 'docker/${IMAGE_NAME}/build.sh --platform linux/amd64 --gdal ${VERSION}'
       }
     }
     stage('Deploy') {
