@@ -1,0 +1,43 @@
+pipeline {
+  agent any
+  tools {
+    jdk 'openjdk11'
+  }
+  environment {
+    REGISTRY_URL = 'repo.lat-lon.de:8444'
+  }
+  parameters {
+    string(defaultValue: "release/3.5-debian11", description: 'Set git branch', name: 'BRANCH')
+    string(defaultValue: "debian-full", description: 'Set image name', name: 'IMAGE_NAME')
+    string(defaultValue: "v3.5.0", description: 'Set version', name: 'VERSION')
+  }
+  stages {
+    stage('Preparation') {
+      steps{
+        deleteDir()
+        git credentialsId: 'latlon-CI-github', url: 'https://github.com/lat-lon/gdal.git', branch: '${BRANCH}'
+      }
+    }
+    stage('Build') {
+      steps{
+        sh './${IMAGE_NAME}/build.sh --platform linux/amd64 --gdal ${VERSION}'
+      }
+    }
+    stage('Deploy') {
+      when {
+        anyOf {
+          environment name: 'DEPLOY_STEP', value: 'true'
+        }
+      }
+      steps{
+        withCredentials([
+          usernamePassword(credentialsId:'26707569-2c7c-4517-9a60-350b6c5041ca', passwordVariable: 'Password', usernameVariable: 'Username')
+        ]) {
+          sh 'docker login -u="${Username}" -p="${Password}"'
+          sh 'docker push lat-lon/gdal:${IMAGE_NAME}-latest $REGISTRY_URL/lat-lon/gdal:${IMAGE_NAME}-latest'
+          sh 'docker push lat-lon/gdal:${IMAGE_NAME}-latest_builder $REGISTRY_URL/lat-lon/gdal:${IMAGE_NAME}-latest_builder'
+        }
+      }
+    }
+  }
+}
