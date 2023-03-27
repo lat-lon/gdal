@@ -7,17 +7,10 @@ pipeline {
     REGISTRY_URL = 'repo.lat-lon.de:8444'
   }
   parameters {
-    string(defaultValue: "release/3.5-debian11", description: 'Set git branch', name: 'BRANCH')
     string(defaultValue: "debian-full", description: 'Set image name', name: 'IMAGE_NAME')
     string(defaultValue: "v3.5.0", description: 'Set version', name: 'VERSION')
   }
   stages {
-    stage('Preparation') {
-      steps{
-        deleteDir()
-        git credentialsId: 'latlon-CI-github', url: 'https://github.com/lat-lon/gdal.git', branch: '${BRANCH}'
-      }
-    }
     stage('Build') {
       steps{
         sh 'docker/${IMAGE_NAME}/build.sh --platform linux/amd64 --gdal ${VERSION}'
