@@ -355,10 +355,11 @@ EOF
             docker network create "${BUILD_NETWORK}"
         fi
 
-        THE_UID=$(id -u "${USER}")
-        THE_GID=$(id -g "${USER}")
+        #THE_UID=$(id -u "${USER}")
+        #THE_GID=$(id -g "${USER}")
 
-        docker run -d -u "${THE_UID}:${THE_GID}" --rm \
+        #docker run -d -u "${THE_UID}:${THE_GID}" --rm \
+        docker run -d --rm \
             -v "${HOST_CACHE_DIR}":/opt/gdal-docker-cache \
             --name "${RSYNC_DAEMON_CONTAINER}" \
             --network "${BUILD_NETWORK}" \
