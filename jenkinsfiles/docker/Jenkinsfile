@@ -8,7 +8,7 @@ pipeline {
   }
   parameters {
     string(defaultValue: "debian-full", description: 'Set image name', name: 'IMAGE_NAME')
-    string(defaultValue: "v3.5.0", description: 'Set version', name: 'VERSION')
+    string(defaultValue: "v3.5.3", description: 'Set version', name: 'VERSION')
   }
   stages {
     stage('Build') {
