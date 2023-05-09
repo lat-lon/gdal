@@ -27,8 +27,8 @@ pipeline {
           usernamePassword(credentialsId:'26707569-2c7c-4517-9a60-350b6c5041ca', passwordVariable: 'Password', usernameVariable: 'Username')
         ]) {
           sh "docker login -u ${Username} -p ${Password} ${REGISTRY_URL}"
-          sh "docker push lat-lon/gdal:${IMAGE_NAME}-latest ${REGISTRY_URL}/lat-lon/gdal:${IMAGE_NAME}-latest"
-          sh "docker push lat-lon/gdal:${IMAGE_NAME}-latest_builder ${REGISTRY_URL}/lat-lon/gdal:${IMAGE_NAME}-latest_builder"
+          sh "docker push lat-lon/gdal:${IMAGE_NAME}-latest"
+          sh "docker push lat-lon/gdal:${IMAGE_NAME}-latest_builder"
         }
       }
     }
